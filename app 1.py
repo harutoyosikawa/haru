@@ -7,5 +7,5 @@ st.write(name)
 
 camera_photo = st.camera_imput("ハイチーズ!") 
 if camera:
-  st.image(camera, caption="写真",use_colum_width=True)
+  st.image(camera, caption="写真",use_column_width=True)
   
