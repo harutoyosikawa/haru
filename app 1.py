@@ -5,7 +5,7 @@ name = st.text_input("好きな人はなんですか")
 
 st.write(name) 
 
-camera_photo = st.camera_imort("ハイチーズ!") 
+camera_photo = st.camera_imput("ハイチーズ!") 
 if camera:
   st.image(camera, caption="写真",use_colum_width=True)
   
