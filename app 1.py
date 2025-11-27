@@ -20,7 +20,7 @@ camera = st.camera_input("写真を撮影します!")
 
 list = [
   {"latitude":35.05, "longtitude":135.76},
-  {"latitude":35.04, "longtitude":135.76}
+  {"latitude":35.04, "longtitude":135.76},
 ]
 st.map(list)
 if camera:
