@@ -17,6 +17,12 @@ st.slider("この映画を10点満点で評価してください",0,10,0)
 
 st.radio("性別を選択してください",["男性","女性","その他"])
 camera = st.camera_input("写真を撮影します!") 
+
+list = [
+  {"latitude":35.05, "longtitude":135.76},
+  {"latitude":35.04, "longtitude":135.76}
+]
+st.map(list)
 if camera:
   st.image(camera, caption="写真",use_column_width=True)
   
