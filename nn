@@ -1,0 +1,40 @@
+import osmnx as ox
+import networkx as nx
+from geopy.distance import geodesic
+
+# 1. 設定：現在地と避難所リスト（本来はAPIやCSVから取得します）
+current_loc = (35.681236, 139.767125)  # 東京駅付近
+shelters = [
+    {"name": "避難所A", "loc": (35.685, 139.770)},
+    {"name": "避難所B", "loc": (35.675, 139.760)},
+    {"name": "避難所C", "loc": (35.690, 139.755)}
+]
+
+def recommend_shelter(current, shelter_list):
+    """
+    最も近い避難所を推薦するシンプルなロジック
+    """
+    best_shelter = min(
+        shelter_list, 
+        key=lambda x: geodesic(current, x['loc']).meters
+    )
+    return best_shelter
+
+# 2. 最適な避難所を決定
+target_shelter = recommend_shelter(current_loc, shelters)
+print(f"推薦された避難所: {target_shelter['name']}")
+
+# 3. 周辺地図データのダウンロード（徒歩ルート）
+# 現在地と目的地を含む範囲をダウンロード
+graph = ox.graph_from_point(current_loc, dist=1500, network_type='walk')
+
+# 4. 経路探索
+# 地図上の最寄りのノード（点）を特定
+orig_node = ox.distance.nearest_nodes(graph, current_loc[1], current_loc[0])
+dest_node = ox.distance.nearest_nodes(graph, target_shelter['loc'][1], target_shelter['loc'][0])
+
+# ダイクストラ法などで最短経路を計算
+route = nx.shortest_path(graph, orig_node, dest_node, weight='length')
+
+# 5. 結果の可視化
+ox.plot_graph_route(graph, route, route_color='r', route_linewidth=4, node_size=0)
